@@ -1,0 +1,2 @@
+def compareStatusCodes(test, respCode, expCode, errorMsg = ""):
+    test.assertEqual(respCode, expCode, f"Bad code returned. \nExpected Code: {expCode.value}. \nResponse Code: {respCode}.\n{errorMsg}")
