@@ -21,6 +21,7 @@ class TestPostCompany(TestCase):
         self.companyID = self.createCompanyResponse[constants.companyID]
 
     def testGetCompany(self):
+        "Get Company"
         getComanyResponse = helper().getCompany(companyID = self.companyID)
         compareStatusCodes(self, getComanyResponse.status_code, HTTPStatus.OK)
 
