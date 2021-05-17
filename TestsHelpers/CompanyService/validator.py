@@ -16,8 +16,8 @@ class CompanyResponse(MainValidator):
     def companyID(self, expected = None):
         return self.equal(expected, companyID)
 
-    def address(self, expected = None):
-        return self.equalByValidator(expected, address,  Address)
+    def address(self):
+        return self.equalByValidator(address, Address)
 
     def back(self):
         return self.parent
