@@ -17,9 +17,14 @@ class TestGetAllUsers(TestCase):
         self.createUserData = User()
         self.createUserData[constants.email] = f"{randomWord(17)}@{randomWord(17)}.com"
         self.createUserResponse = helper().createUser(self.createUserData).json()
+        self.userID = self.createUserResponse[constants.userID]
 
     def testGetAllUsers(self):
         getAllUsersResponse = helper().getUsers()
+        compareStatusCodes(self, getAllUsersResponse.status_code, HTTPStatus.OK)
+
+    def testGetAllUsersLimitAndOffset(self):
+        getAllUsersResponse = helper().getUsers(limit = 10, offset = 2)
         compareStatusCodes(self, getAllUsersResponse.status_code, HTTPStatus.OK)
 
     def tearDown(self):
