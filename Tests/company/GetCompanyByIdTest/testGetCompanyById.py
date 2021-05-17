@@ -1,4 +1,3 @@
-from os import name
 from unittest import TestCase
 from http import HTTPStatus
 
@@ -12,7 +11,7 @@ from ....TestsHelpers.CompanyService import constants
 from ....TestsHelpers.TestsUtils.compareStatusCodes import *
 from ....TestsHelpers.TestsUtils.randomStuff import *
 
-class TestPostCompany(TestCase):
+class TestGetCompanyById(TestCase):
 
     def setUp(self):
         self.createCompanyData = Company()

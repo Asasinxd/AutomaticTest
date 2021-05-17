@@ -27,7 +27,7 @@ class TestDeleteUser(TestCase):
         deleteUserResponce = helper().deleteUser(randomUUID4())
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.NOT_FOUND)
 
-    def testDeleteUserDeleted(self):
+    def testDeleteUserAlreadyDeleted(self):
         deleteUserResponce = helper().deleteUser(self.userID)
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.NO_CONTENT)
         deleteUserResponce = helper().deleteUser(self.userID)
