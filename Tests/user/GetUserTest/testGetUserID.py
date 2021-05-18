@@ -1,27 +1,28 @@
 from unittest import TestCase
 from http import HTTPStatus
 
-from ....TestsHelpers.Service.defaultDataCreator import *
-from ....TestsHelpers.Service.helper import *
+from ....TestsHelpers.Service import defaultDataCreator
+from ....TestsHelpers.Service.helper import Helper as UserServiceHelper
 from ....TestsHelpers.Service.comparator import UserResponse as Comparator
-from ....TestsHelpers.Service.validator import *
+from ....TestsHelpers.Service.validator import UserResponse as Validator
 from ....TestsHelpers.Service import constants
 
  
-from ....TestsHelpers.TestsUtils.compareStatusCodes import *
-from ....TestsHelpers.TestsUtils.randomStuff import *
+from ....TestsHelpers.TestsUtils.compareStatusCodes import compareStatusCodes
+from ....TestsHelpers.TestsUtils.randomStuff import randomUUID4, randomWord, randomNumber
 
 class TestGetUserById(TestCase):
 
     def setUp(self):
-        self.createUserData = User()
+        self.createUserData = defaultDataCreator.User()
         self.createUserData[constants.email] = f"{randomWord(17)}@{randomWord(17)}.com"
-        self.createUserResponse = Helper().createUser(self.createUserData).json()
+        self.createUserResponse = UserServiceHelper().createUser(self.createUserData).json()
         self.userID = self.createUserResponse[constants.userID]
         
 
     def testGetUser(self):
-        getUserResponse = Helper().getUser(userID = self.userID)
+        """Get User"""
+        getUserResponse = UserServiceHelper().getUser(userID = self.userID)
         compareStatusCodes(self, getUserResponse.status_code, HTTPStatus.OK)
 
         testing = getUserResponse.json()
@@ -34,24 +35,28 @@ class TestGetUserById(TestCase):
             .email()
 
     def testGetUserNonExistingUser(self):
-        getUserResponse = Helper().getUser(userID = randomUUID4())
+        """Get User. Non Existing User"""
+        getUserResponse = UserServiceHelper().getUser(userID = randomUUID4())
         compareStatusCodes(self, getUserResponse.status_code, HTTPStatus.NOT_FOUND)
 
     def testGetUserDeleted(self):
-        Helper().deleteUser(self.userID)
-        getUserResponse = Helper().getUser(userID = self.userID)
+        """Get User. User Has Benn Deleted"""
+        UserServiceHelper().deleteUser(self.userID)
+        getUserResponse = UserServiceHelper().getUser(userID = self.userID)
         compareStatusCodes(self, getUserResponse.status_code, HTTPStatus.NOT_FOUND)
 
     def testGetUserIdAsString(self):
-        getUserResponse = Helper().getUser(userID = randomWord(17))
+        """Get User. User Id As String Type"""
+        getUserResponse = UserServiceHelper().getUser(userID = randomWord(17))
         compareStatusCodes(self, getUserResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def testGetUserIdAsInt(self):
-        getUserResponse = Helper().getUser(userID = randomNumber(1,100))
+        """Get User. User Id As Integer Type"""
+        getUserResponse = UserServiceHelper().getUser(userID = randomNumber(1,100))
         compareStatusCodes(self, getUserResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def tearDown(self):
-        Helper().deleteUser(self.userID)
+        UserServiceHelper().deleteUser(self.userID)
 
 
 

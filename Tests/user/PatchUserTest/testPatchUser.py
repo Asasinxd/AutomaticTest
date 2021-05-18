@@ -1,7 +1,7 @@
 from unittest import TestCase
 from http import HTTPStatus
 
-from ....TestsHelpers.Service.defaultDataCreator import *
+from ....TestsHelpers.Service import defaultDataCreator
 from ....TestsHelpers.Service.helper import Helper as helper
 from ....TestsHelpers.Service.comparator import UserResponse as Comaprator
 from ....TestsHelpers.Service.validator import UserResponse as Validator
@@ -9,18 +9,19 @@ from ....TestsHelpers.Service import constants
 
  
 from ....TestsHelpers.TestsUtils.compareStatusCodes import compareStatusCodes
-from ....TestsHelpers.TestsUtils.randomStuff import *
+from ....TestsHelpers.TestsUtils.randomStuff import randomWord, randomUUID4
 
 class TestDeleteUser(TestCase):
 
     def setUp(self):
-        self.createUserData = User()
+        self.createUserData = defaultDataCreator.User()
         self.createUserData[constants.email] = f"{randomWord(17)}@{randomWord(17)}.com"
         self.createUserResponse = helper().createUser(self.createUserData).json()
         self.userID = self.createUserResponse[constants.userID]
-        self.updateData = UserUpdate()
+        self.updateData = defaultDataCreator.UserUpdate()
 
     def testPatchUser(self):
+        """Patch User"""
         updateUserResponse = helper().updateUser(self.userID, self.updateData)
         compareStatusCodes(self, updateUserResponse.status_code, HTTPStatus.OK)
 
@@ -37,6 +38,7 @@ class TestDeleteUser(TestCase):
             .lastName()\
 
     def testPatchUserNonExistingUser(self):
+        """Patch User. Non Existing Company"""
         updateUserResponse = helper().updateUser(randomUUID4(), self.updateData)
         compareStatusCodes(self, updateUserResponse.status_code, HTTPStatus.NOT_FOUND)
 

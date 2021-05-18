@@ -1,61 +1,70 @@
 from unittest import TestCase
 from http import HTTPStatus
 
-from ....TestsHelpers.Service.defaultDataCreator import *
-from ....TestsHelpers.Service.helper import Helper as helper
+from ....TestsHelpers.Service import defaultDataCreator
+from ....TestsHelpers.Service.helper import Helper as UserServiceHelper
 from ....TestsHelpers.Service.comparator import UserResponse as Comaprator
 from ....TestsHelpers.Service.validator import UserResponse as Validator
 from ....TestsHelpers.Service import constants
 
  
 from ....TestsHelpers.TestsUtils.compareStatusCodes import compareStatusCodes
-from ....TestsHelpers.TestsUtils.randomStuff import *
+from ....TestsHelpers.TestsUtils.randomStuff import randomWord, randomNumber, randomUUID4
 
 class TestDeleteUser(TestCase):
 
     def setUp(self):
-        self.createUserData = User()
+        self.createUserData = defaultDataCreator.User()
         self.createUserData[constants.email] = f"{randomWord(17)}@{randomWord(17)}.com"
-        self.createUserResponse = helper().createUser(self.createUserData).json()
+        self.createUserResponse = UserServiceHelper().createUser(self.createUserData).json()
         self.userID = self.createUserResponse[constants.userID]
 
     def testDeleteUser(self):
-        deleteUserResponce = helper().deleteUser(self.userID)
+        """Delete User"""
+        deleteUserResponce = UserServiceHelper().deleteUser(self.userID)
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.NO_CONTENT)
     
     def testDeleteUserNonExisting(self):
-        deleteUserResponce = helper().deleteUser(randomUUID4())
+        """Delete User. Non Existing User"""
+        deleteUserResponce = UserServiceHelper().deleteUser(randomUUID4())
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.NOT_FOUND)
 
     def testDeleteUserAlreadyDeleted(self):
-        deleteUserResponce = helper().deleteUser(self.userID)
+        """Delete User. Already Deleted User"""
+        deleteUserResponce = UserServiceHelper().deleteUser(self.userID)
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.NO_CONTENT)
-        deleteUserResponce = helper().deleteUser(self.userID)
+        deleteUserResponce = UserServiceHelper().deleteUser(self.userID)
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.NOT_FOUND)
 
     def testDeleteUserEmptyUserId(self):
-        deleteUserResponce = helper().deleteUser('')
+        """Delete User. Empty User Id"""
+        deleteUserResponce = UserServiceHelper().deleteUser(userID = '')
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.METHOD_NOT_ALLOWED)
 
     def testDeleteUserIdAsString(self):
-        deleteUserResponce = helper().deleteUser(randomWord(17))
+        """Delete User. User Id As String Type"""
+        deleteUserResponce = UserServiceHelper().deleteUser(randomWord(17))
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def testDeleteUserIdAsInt(self):
-        deleteUserResponce = helper().deleteUser(randomNumber(1,100))
+        """Delete User. User Id As Integer Type"""
+        deleteUserResponce = UserServiceHelper().deleteUser(randomNumber(1,100))
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def testDeleteUserIdAsDic(self):
-        deleteUserResponce = helper().deleteUser({"Ania", "10"})
+        """Delete User. User Id As Dictionary Type"""
+        deleteUserResponce = UserServiceHelper().deleteUser({"Ania", "10"})
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def testDeleteUserIdAsArray(self):
-        deleteUserResponce = helper().deleteUser(["Ania"])
+        """Delete User. User Id As Array Type"""
+        deleteUserResponce = UserServiceHelper().deleteUser(["Ania"])
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def testDeleteUserIdAsBoolen(self):
-        deleteUserResponce = helper().deleteUser(True)
+        """Delete User. User Id As Bool Type"""
+        deleteUserResponce = UserServiceHelper().deleteUser(True)
         compareStatusCodes(self, deleteUserResponce.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def tearDown(self):
-        helper().deleteUser(self.userID)
+        UserServiceHelper().deleteUser(self.userID)

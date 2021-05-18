@@ -1,26 +1,26 @@
 from unittest import TestCase
 from http import HTTPStatus
 
-from ....TestsHelpers.CompanyService.defaultDataCreator import *
-from ....TestsHelpers.CompanyService.helper import Helper as helper
+from ....TestsHelpers.CompanyService import defaultDataCreator
+from ....TestsHelpers.CompanyService.helper import Helper as CompanyServiceHelper
 from ....TestsHelpers.CompanyService.comparator import CompanyResponse as Comaprator
 from ....TestsHelpers.CompanyService.validator import CompanyResponse as Validator
 from ....TestsHelpers.CompanyService import constants
 
  
-from ....TestsHelpers.TestsUtils.compareStatusCodes import *
-from ....TestsHelpers.TestsUtils.randomStuff import *
+from ....TestsHelpers.TestsUtils.compareStatusCodes import compareStatusCodes
+from ....TestsHelpers.TestsUtils.randomStuff import randomWord, randomNumber
 
 class TestPostCompany(TestCase):
 
     def setUp(self):
-        self.createCompanyData = Company()
+        self.createCompanyData = defaultDataCreator.Company()
         self.companyID = None
         self.createCompanyData[constants.name] = randomWord(17)
     
     def testPostCompany(self):
-        
-        createCompanyResponse = helper().createCompany(self.createCompanyData)
+        """Post Company"""
+        createCompanyResponse = CompanyServiceHelper().createCompany(self.createCompanyData)
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.CREATED)
 
         testing = createCompanyResponse.json()
@@ -38,39 +38,62 @@ class TestPostCompany(TestCase):
                 .back()
 
     def testPostCompanyAlreadyExist(self):
-        createCompanyResponse = helper().createCompany(self.createCompanyData)
-        createCompanyResponse = helper().createCompany(self.createCompanyData)
+        """Post Company. Company Already Exist"""
+        createCompanyResponse = CompanyServiceHelper().createCompany(self.createCompanyData)
+        createCompanyResponse = CompanyServiceHelper().createCompany(self.createCompanyData)
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.CONFLICT)
 
     def testPostCompanyWithoutName(self):
+        """Post Company. Without Name"""
         del self.createCompanyData[constants.name]
 
-        createCompanyResponse = helper().createCompany(self.createCompanyData)
+        createCompanyResponse = CompanyServiceHelper().createCompany(self.createCompanyData)
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
     
     def testPostCompanyNameAsInt(self):
+        """Post Company. Name As Integer Type"""
         self.createCompanyData[constants.name] = randomNumber(1,100)
 
-        createCompanyResponse = helper().createCompany(self.createCompanyData)
+        createCompanyResponse = CompanyServiceHelper().createCompany(self.createCompanyData)
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.BAD_REQUEST)
 
     def testPostCompanyNameAsArray(self):
+        """Post Company. Name As Array Type"""
         self.createCompanyData[constants.name] = ["ania"]
 
-        createCompanyResponse = helper().createCompany(self.createCompanyData)
+        createCompanyResponse = CompanyServiceHelper().createCompany(self.createCompanyData)
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.BAD_REQUEST)
 
     def testPostCompanyNameAsDict(self):
+        """Post Company. Name As Dictionary Type"""
         self.createCompanyData[constants.name] = {"bania":"10"}
 
-        createCompanyResponse = helper().createCompany(self.createCompanyData)
+        createCompanyResponse = CompanyServiceHelper().createCompany(self.createCompanyData)
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.BAD_REQUEST)
 
     def testPostCompanyNameAsBoolen(self):
+        """Post Company. Name As Bool Type"""
         self.createCompanyData[constants.name] = True
 
-        createCompanyResponse = helper().createCompany(self.createCompanyData)
+        createCompanyResponse = CompanyServiceHelper().createCompany(self.createCompanyData)
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.BAD_REQUEST)
 
+    def testPostCompanyOnlyName(self):
+        """Post Company. Only Name Given"""
+        del self.createCompanyData[constants.address]
+
+        createCompanyResponse = CompanyServiceHelper().createCompany(self.createCompanyData)
+        compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
+
+    def testPostCompanyWithoutBody(self):
+        """Post Company. No Body Given"""
+        createCompanyResponse = CompanyServiceHelper().createCompany(data = {})
+        compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
+
+    def testPostCompanyEmpty(self):
+        """Post Company. Empty Body Given"""
+        createCompanyResponse = CompanyServiceHelper().createCompany(data = None)
+        compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
+
     def tearDown(self):
-        helper().deleteCompany(self.companyID)
+        CompanyServiceHelper().deleteCompany(self.companyID)

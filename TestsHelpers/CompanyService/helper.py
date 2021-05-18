@@ -9,6 +9,7 @@ class Helper():
         self.url = URL
         
     def createCompany(self, data =  defaultDataCreator.Company(), headers = dict()):
+        #Create User
         url = f'{self.url}/v1/companies'
 
         resp = requests.post(url , json = data, headers = headers)
@@ -16,6 +17,7 @@ class Helper():
         return resp
 
     def getCompanies(self, userID = None, limit = None, offset = None, headers = dict()):
+        #Get All Companies
 
         params =  dict()
         if userID != None: params["user_id"] = userID
@@ -29,6 +31,8 @@ class Helper():
         return  resp
 
     def getCompany(self, companyID,  headers = dict()):
+        #Get Company
+
         url = f'{self.url}/v1/companies/{companyID}'
 
         resp =  requests.get(url, headers = headers)
@@ -36,6 +40,8 @@ class Helper():
         return resp
 
     def updateCompany(self, comapanyID, data = defaultDataCreator.CompanyUpdate(), headers = dict()):
+        #Update User
+
         url = f'{self.url}/v1/companies/{comapanyID}'
 
         resp = requests.patch(url, json = data, headers = headers)
@@ -43,6 +49,8 @@ class Helper():
         return resp
 
     def deleteCompany(self, companyID, headers = dict()):
+        #Delete Company
+
         url = f'{self.url}/v1/companies/{companyID}'
 
         resp = requests.delete(url,  headers = dict())
