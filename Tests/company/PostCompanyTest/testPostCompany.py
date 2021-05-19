@@ -1,11 +1,12 @@
+from os import name
 from unittest import TestCase
 from http import HTTPStatus
 
-from ....TestsHelpers.CompanyService import defaultDataCreator
-from ....TestsHelpers.CompanyService.helper import Helper as CompanyServiceHelper
-from ....TestsHelpers.CompanyService.comparator import CompanyResponse as Comaprator
-from ....TestsHelpers.CompanyService.validator import CompanyResponse as Validator
-from ....TestsHelpers.CompanyService import constants
+from ....TestsHelpers.Service import defaultDataCreator
+from ....TestsHelpers.Service.helper import Helper as CompanyServiceHelper
+from ....TestsHelpers.Service.comparator import CompanyResponse as Comaprator
+from ....TestsHelpers.Service.validator import CompanyResponse as Validator
+from ....TestsHelpers.Service import constants
 
  
 from ....TestsHelpers.TestsUtils.compareStatusCodes import compareStatusCodes
@@ -27,7 +28,14 @@ class TestPostCompany(TestCase):
         expected = self.createCompanyData
 
         Validator(self, testing)\
-            .companyID()
+            .companyID()\
+            .name()\
+            .address()\
+                .city()\
+                .street()\
+                .postalCode()\
+                .country()\
+                .back()
 
         self.companyID = testing[constants.companyID]
 

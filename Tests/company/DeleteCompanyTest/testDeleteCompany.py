@@ -1,11 +1,11 @@
 from unittest import TestCase
 from http import HTTPStatus
 
-from ....TestsHelpers.CompanyService import defaultDataCreator
-from ....TestsHelpers.CompanyService.helper import Helper as CompanyServiceHelper
-from ....TestsHelpers.CompanyService.comparator import CompanyResponse as Comaprator
-from ....TestsHelpers.CompanyService.validator import CompanyResponse as Validator
-from ....TestsHelpers.CompanyService import constants
+from ....TestsHelpers.Service import defaultDataCreator
+from ....TestsHelpers.Service.helper import Helper as CompanyServiceHelper
+from ....TestsHelpers.Service.comparator import CompanyResponse as Comaprator
+from ....TestsHelpers.Service.validator import CompanyResponse as Validator
+from ....TestsHelpers.Service import constants
 
  
 from ....TestsHelpers.TestsUtils.compareStatusCodes import compareStatusCodes
@@ -38,7 +38,7 @@ class TestDeleteCompany(TestCase):
 
     def testDeleteCompanyWithEmptyId(self):
         """Delete User. Empty Company ID"""
-        deleteCompanyResponse = CompanyServiceHelper().deleteCompany(compamnyID = '')
+        deleteCompanyResponse = CompanyServiceHelper().deleteCompany(companyID = '')
         compareStatusCodes(self, deleteCompanyResponse.status_code, HTTPStatus.METHOD_NOT_ALLOWED)
 
     def testDeleteCompanyIdAsString(self):

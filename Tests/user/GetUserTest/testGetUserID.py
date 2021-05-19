@@ -32,7 +32,8 @@ class TestGetUserById(TestCase):
             .userID()\
             .firstName()\
             .lastName()\
-            .email()
+            .email()\
+            .relations()
 
     def testGetUserNonExistingUser(self):
         """Get User. Non Existing User"""
