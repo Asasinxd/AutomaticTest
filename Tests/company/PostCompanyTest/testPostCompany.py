@@ -98,7 +98,7 @@ class TestPostCompany(TestCase):
         createCompanyResponse = CompanyServiceHelper().createCompany(data = {})
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
-    def testPostCompanyEmpty(self):
+    def testPostCompanyEmptyBody(self):
         """Post Company. Empty Body Given"""
         createCompanyResponse = CompanyServiceHelper().createCompany(data = None)
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)

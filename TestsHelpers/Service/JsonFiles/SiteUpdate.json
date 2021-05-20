@@ -1,9 +1,39 @@
 {
-    "name": "string",
-    "address": {
-      "street": "string",
-      "city": "string",
-      "postal_code": "string",
-      "country": "string"
+  "name": "string",
+  "address": {
+    "street": "string",
+    "city": "string",
+    "postal_code": "string",
+    "country": "string"
+  },
+  "weekly_opening_times": {
+    "monday": {
+      "open_from": 1439,
+      "open_to": 1440
+    },
+    "tuesday": {
+      "open_from": 1439,
+      "open_to": 1440
+    },
+    "wednesday": {
+      "open_from": 1439,
+      "open_to": 1440
+    },
+    "thursday": {
+      "open_from": 1439,
+      "open_to": 1440
+    },
+    "friday": {
+      "open_from": 1439,
+      "open_to": 1440
+    },
+    "saturday": {
+      "open_from": 1439,
+      "open_to": 1440
+    },
+    "sunday": {
+      "open_from": 1439,
+      "open_to": 1440
     }
   }
+}
