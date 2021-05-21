@@ -1,3 +1,4 @@
+from os import extsep
 from ..TestsUtils.mainValidator import MainValidator
 from . import constants
 
@@ -73,6 +74,9 @@ class SiteResponse(MainValidator):
     def address(self):
         return self.equalByValidator(constants.address, Address)
 
+    def weeklyOpeningTimes(self, expected = None):
+        return self.equalByValidator(constants.weeklyOpeningTimes, weeklyOpeningTimes)
+
     def pricing(self):
         return self.equalByValidator(constants.pricing, Pricing)
 
@@ -118,6 +122,39 @@ class Address(MainValidator):
 
     def country(self, expected = None):
         return self.equal(expected, constants.country)
+
+    def back(self):
+        return self.parent
+
+class weeklyOpeningTimes(MainValidator):
+    def __init__(self, test, testing, parent = None):
+        self.test = test
+        self.testing = testing
+        self.parent = parent
+
+    def allFields(self, expected = None):
+        return self.equalAll(expected)
+
+    def monday(self, expected = None):
+        return self.equal(expected, constants.monday)
+
+    def tuesday(self, expected = None):
+        return self.equal(expected, constants.tuesday)
+
+    def wednesday(self, expected = None):
+        return self.equal(expected, constants.wednesday)
+
+    def thursday(self, expected = None):
+        return self.equal(expected, constants.thursday)
+
+    def friday(self, expected = None):
+        return self.equal(expected, constants.friday)
+
+    def saturday(self, expected = None):
+        return self.equal(expected, constants.saturday)
+
+    def sunday(self, expected = None):
+        return self.equal(expected, constants.sunday)
 
     def back(self):
         return self.parent

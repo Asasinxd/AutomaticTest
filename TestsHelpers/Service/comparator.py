@@ -73,6 +73,9 @@ class SiteResponse(MainComparator):
     def address(self):
         return self.equalByComparator(constants.address, Address)
 
+    def weeklyOpeningTimes(self):
+        return self.equalByComparator(constants.weeklyOpeningTimes, WeeklyOpeningtimes)
+
     def pricing(self):
         return self.equalByComparator(constants.pricing, Pricing)
 
@@ -120,7 +123,40 @@ class Address(MainComparator):
 
     def back(self):
         return self.parent
-    
+
+class WeeklyOpeningtimes(MainComparator):
+    def __init__(self, test, testing, expected, parent = None):
+        self.test = test
+        self.testing = testing
+        self.expected = expected
+        self.parent = parent
+
+    def allFileds(self):
+        return self.equalAll()
+
+    def monday(self):
+        return self.equal(constants.monday)
+
+    def tuesday(self):
+        return self.equal(constants.tuesday)
+
+    def wednesday(self):
+        return self.equal(constants.wednesday)
+
+    def thursday(self):
+        return self.equal(constants.thursday)
+
+    def friday(self):
+        return self.equal(constants.friday)
+
+    def saturday(self):
+        return self.equal(constants.saturday)
+
+    def sunday(self):
+        return self.equal(constants.sunday)
+
+    def back(self):
+        return self.parent
 
 class Pricing(MainComparator):
     def __init__(self, test, testing, expected, parent = None):

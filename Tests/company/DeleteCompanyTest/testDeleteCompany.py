@@ -37,7 +37,7 @@ class TestDeleteCompany(TestCase):
         compareStatusCodes(self, deleteCompanyResponse.status_code, HTTPStatus.NOT_FOUND)
 
     def testDeleteCompanyWithEmptyId(self):
-        """Delete User. Empty Company ID"""
+        """Delete User. Empty Company Id"""
         deleteCompanyResponse = CompanyServiceHelper().deleteCompany(companyID = '')
         compareStatusCodes(self, deleteCompanyResponse.status_code, HTTPStatus.METHOD_NOT_ALLOWED)
 

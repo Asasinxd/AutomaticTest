@@ -18,15 +18,15 @@ class TestPatchCompany(TestCase):
         self.createCompanyData[constants.name] = randomWord(17)
         self.createCompanyResponse = Helper().createCompany(self.createCompanyData).json()
         self.companyID = self.createCompanyResponse[constants.companyID]
-        self.upadateCompany = defaultDataCreator.CompanyUpdate()
+        self.updateCompany = defaultDataCreator.CompanyUpdate()
 
     def testPatchCompany(self):
         """Patch Company"""
-        upadateCompanyResponse = Helper().updateCompany(self.companyID, self.upadateCompany)
+        upadateCompanyResponse = Helper().updateCompany(self.companyID, self.updateCompany)
         compareStatusCodes(self, upadateCompanyResponse.status_code, HTTPStatus.OK)
 
         testing = upadateCompanyResponse.json()
-        expected = self.upadateCompany
+        expected = self.updateCompany
 
         Validator(self, testing)\
             .name()\
@@ -44,13 +44,13 @@ class TestPatchCompany(TestCase):
 
     def testPatchCompanyNonExistingCompany(self):
         """Patch Company. Non Existing Company"""
-        upadateCompanyResponse = Helper().updateCompany(randomUUID4(), self.upadateCompany)
+        upadateCompanyResponse = Helper().updateCompany(randomUUID4(), self.updateCompany)
         compareStatusCodes(self, upadateCompanyResponse.status_code, HTTPStatus.NOT_FOUND)
 
     def testPatchCompanyNameAlreadyExist(self):
         """Patch Company. Name Already Exist"""
-        self.upadateCompany[constants.name] = self.createCompanyData[constants.name]
-        upadateCompanyResponse = Helper().updateCompany(self.companyID, self.upadateCompany)
+        self.updateCompany[constants.name] = self.createCompanyData[constants.name]
+        upadateCompanyResponse = Helper().updateCompany(self.companyID, self.updateCompany)
         compareStatusCodes(self, upadateCompanyResponse.status_code, HTTPStatus.CONFLICT)
 
     def testPatchCompanyWithEmptyBody(self):

@@ -1,4 +1,3 @@
-from os import O_CREAT
 from unittest import TestCase
 from http import HTTPStatus
 
@@ -6,11 +5,13 @@ from ....TestsHelpers.Service import defaultDataCreator
 
 from ....TestsHelpers.Service.helper import Helper 
 from ....TestsHelpers.Service.comparator import SiteResponse as Comaprator
-from ....TestsHelpers.Service.validator import Pricing, SiteResponse as Validator
+from ....TestsHelpers.Service.validator import SiteResponse as Validator
 from ....TestsHelpers.Service import constants
 
 from ....TestsHelpers.TestsUtils.compareStatusCodes import compareStatusCodes
 from ....TestsHelpers.TestsUtils.randomStuff import randomNumber, randomUUID4, randomWord
+
+from ....TestsHelpers.TestsUtils.decorators import expectedFailure
 
 class TestPostSite(TestCase):
     
@@ -25,7 +26,6 @@ class TestPostSite(TestCase):
 
     def testPostSite(self):
         """Post Site"""
-        print(self.createSiteData)
         createSiteResponse = Helper().createSite(self.createSiteData)
         compareStatusCodes(self, createSiteResponse.status_code, HTTPStatus.CREATED)
 
@@ -43,6 +43,15 @@ class TestPostSite(TestCase):
                 .postalCode()\
                 .country()\
                 .back()\
+            .weeklyOpeningTimes()\
+                .monday()\
+                .tuesday()\
+                .wednesday()\
+                .thursday()\
+                .friday()\
+                .saturday()\
+                .sunday()\
+                .back()\
             .pricing()\
                 .numberOfMinutes()\
                 .price()\
@@ -58,6 +67,15 @@ class TestPostSite(TestCase):
                 .city()\
                 .postalCode()\
                 .country()\
+                .back()\
+            .weeklyOpeningTimes()\
+                .monday()\
+                .tuesday()\
+                .wednesday()\
+                .thursday()\
+                .friday()\
+                .saturday()\
+                .sunday()\
                 .back()\
             .pricing()\
                 .numberOfMinutes()\
@@ -98,7 +116,7 @@ class TestPostSite(TestCase):
                 .numberOfMinutes()\
                 .price()\
                 .currency()\
-                .back()      
+                .back()     
 
     def testPostSiteNoBody(self):
         """Post Site. No Body Given"""
@@ -138,12 +156,13 @@ class TestPostSite(TestCase):
         createSiteResponse = Helper().createSite(self.createSiteData)
         compareStatusCodes(self, createSiteResponse.status_code, HTTPStatus.BAD_REQUEST)
 
+    @expectedFailure("Bug")
     def testPostSiteCompanyIdAsRandomUUID(self):
         """Post Site. Company Id As Random UUID"""
         self.createSiteData[constants.companyID] = randomUUID4()
 
         createSiteResponse = Helper().createSite(self.createSiteData)
-        compareStatusCodes(self, createSiteResponse.status_code, HTTPStatus.INTERNAL_SERVER_ERROR)
+        compareStatusCodes(self, createSiteResponse.status_code, HTTPStatus.NOT_FOUND)
 
     def testPostSiteCompanyIdAsBool(self):
         """Post Site. Company Id As Boolen Type"""

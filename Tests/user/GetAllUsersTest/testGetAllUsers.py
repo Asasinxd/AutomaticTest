@@ -43,7 +43,7 @@ class TestGetAllUsers(TestCase):
 
     def testGetAllUsersLimitAndOffset(self):
         """Get All Users. Limit And Offset Given"""
-        getAllUsersResponse = Helper().getUsers(limit = 20, offset = 10)
+        getAllUsersResponse = Helper().getUsers(limit = 20, offset = 10,)
         compareStatusCodes(self, getAllUsersResponse.status_code, HTTPStatus.OK)
 
         testing = getAllUsersResponse.json()
@@ -56,7 +56,7 @@ class TestGetAllUsers(TestCase):
         usersLength = len(testing[constants.users])
         self.assertTrue(20 >= usersLength > 0, "Incorrect number of users array in response body")
         self.assertTrue(testing[constants.count] >= usersLength, "Incorrect count compared to number of users in response body")
-        self.assertEqual(20, testing[constants.limit], "Incorrect limi in response body")
+        self.assertEqual(20, testing[constants.limit], "Incorrect limit in response body")
         self.assertEqual(10, testing[constants.offset], "Incorrect offset in response body")
 
     def testGetAllUsersCompanyID(self):

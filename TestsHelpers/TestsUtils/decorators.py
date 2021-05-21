@@ -1,3 +1,18 @@
+import functools
+import nose
+
+def expectedFailure(reason):
+    def wrapper(test):
+        @functools.wraps(test)
+        def decoratedTest(*args, **kwargs):
+            try:
+                test(*args, **kwargs)
+            except Exception:
+                raise nose.SkipTest(f"Unresolved issue {reason}")
+            else:
+                raise AssertionError(f"Failure expected according to {reason}")
+        return decoratedTest
+    return wrapper
 
 def errorExplanation(why):
     def _errorExplanation(func):
