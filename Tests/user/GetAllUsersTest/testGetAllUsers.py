@@ -13,8 +13,8 @@ from ....TestsHelpers.TestsUtils.compareStatusCodes import compareStatusCodes
 from ....TestsHelpers.TestsUtils.randomStuff import randomWord
 
 class TestGetAllUsers(TestCase):
-
-    def setUp(self):
+    @classmethod
+    def setUpClass(self):
         self.createUserData = defaultDataCreator.User()
         self.createUserData[constants.email] = f"{randomWord(17)}@{randomWord(17)}.com"
         self.createUserResponse = Helper().createUser(self.createUserData).json()
@@ -43,7 +43,7 @@ class TestGetAllUsers(TestCase):
 
     def testGetAllUsersLimitAndOffset(self):
         """Get All Users. Limit And Offset Given"""
-        getAllUsersResponse = Helper().getUsers(limit = 20, offset = 10,)
+        getAllUsersResponse = Helper().getUsers(limit = 20, offset = 10)
         compareStatusCodes(self, getAllUsersResponse.status_code, HTTPStatus.OK)
 
         testing = getAllUsersResponse.json()
@@ -59,25 +59,7 @@ class TestGetAllUsers(TestCase):
         self.assertEqual(20, testing[constants.limit], "Incorrect limit in response body")
         self.assertEqual(10, testing[constants.offset], "Incorrect offset in response body")
 
-    def testGetAllUsersCompanyID(self):
-        """Get All Users. Company Id Given"""
-        getAllUsersResponse = Helper().getUsers(companyID = self.companyID)
-        compareStatusCodes(self, getAllUsersResponse.status_code, HTTPStatus.OK)
-
-        testing = getAllUsersResponse.json()
-
-        self.assertIn(constants.limit, testing, "No limit field in response body")
-        self.assertIn(constants.count, testing, "No count field in response body")
-        self.assertIn(constants.users, testing, "No users field in response body")
-
-        usersLength = len(testing[constants.users])
-        self.assertTrue(10 >= usersLength > 0, "Incorrect number of users array in response body")
-        self.assertTrue(testing[constants.count] >= usersLength, "Incorrect count compared to number of users in response body")
-        self.assertEqual(10, testing[constants.limit], "Incorrect limit in response body")
-
-    def testGetAllUserSiteID(self):
-        """Get All Users. Site Id Given"""
-
-    def tearDown(self):
+    @classmethod
+    def tearDownClass(self):
         Helper().deleteCompany(self.companyID)
         Helper().deleteUser(self.userID)

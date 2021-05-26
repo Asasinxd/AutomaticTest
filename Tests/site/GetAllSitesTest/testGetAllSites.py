@@ -60,17 +60,6 @@ class TestGetAllSites(TestCase):
         self.assertEqual(20, testing[constants.limit], "Incorrect limit in response body")
         self.assertEqual(10, testing[constants.offset], "Incorrect offset in response body")
 
-
-    
-    def testGetAllSitesCompanyId(self):
-        """Get All Sites. Company Id Given"""
-        Helper().createSite(self.createSiteData).json()
-        Helper().createSite(self.createSiteData).json()
-
-        getAllSitesResponse = Helper().getSites(companyID = self.companyID)
-        compareStatusCodes(self, getAllSitesResponse.status_code, HTTPStatus.OK)
-
-
     def tearDown(self):
         Helper().deleteCompany(self.companyID)
         Helper().deleteSite(self.siteID)

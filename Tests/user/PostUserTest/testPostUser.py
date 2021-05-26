@@ -73,8 +73,15 @@ class TestPostUser(TestCase):
         createUserResponse = Helper().createUser(self.createUserData)
         compareStatusCodes(self, createUserResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
-    def testPostUserEmailAsString(self):
-        """Post User. Email As String Type"""
+    def testPostUserEmailAsNone(self):
+        """Post User. Email As None"""
+        self.createUserData[constants.email] = None
+
+        createUserResponse = Helper().createUser(self.createUserData)
+        compareStatusCodes(self, createUserResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
+
+    def testPostUserEmailAsInvalidSyntax(self):
+        """Post User. Email As Invalid Syntax"""
         self.createUserData[constants.email] = randomWord(17)
 
         createUserResponse = Helper().createUser(self.createUserData)
@@ -111,6 +118,13 @@ class TestPostUser(TestCase):
     def testPostUserWithoutFirstName(self):
         """Post User. No First Name Given"""
         del self.createUserData[constants.firstName]
+
+        createUserResponse = Helper().createUser(self.createUserData)
+        compareStatusCodes(self, createUserResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
+
+    def testPostUserFirstNameAsNone(self):
+        """Post User. Fist Name As None"""
+        self.createUserData[constants.firstName] = None
 
         createUserResponse = Helper().createUser(self.createUserData)
         compareStatusCodes(self, createUserResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
@@ -153,6 +167,13 @@ class TestPostUser(TestCase):
     def testPostUserWithoutLastName(self):
         """Post User. No Last Nama Given"""
         del self.createUserData[constants.lastName]
+
+        createUserResponse = Helper().createUser(self.createUserData)
+        compareStatusCodes(self, createUserResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
+
+    def testPostUserLastNameAsNone(self):
+        """Post User. Last Name As None"""
+        self.createUserData[constants.lastName] = None
 
         createUserResponse = Helper().createUser(self.createUserData)
         compareStatusCodes(self, createUserResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)

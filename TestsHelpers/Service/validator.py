@@ -101,6 +101,39 @@ class UnitResponse(MainValidator):
     def back(self):
         return self.parent
 
+class ReservationResponse(MainValidator):
+    def __init__(self, test, testing, parent = None):
+        self.test = test
+        self.testing = testing
+        self.parent = parent
+
+    def allFields(self, expected = None):
+        return self.equalAll(expected)
+
+    def reservationID(self, expected = None):
+        return self.equal(expected, constants.reservationID)
+
+    def userID(self,  expected = None):
+        return self.equal(expected, constants.userID)
+
+    def unitID(self, expected = None):
+        return self.equal(expected, constants.unitID)
+
+    def sections(self, expected = None):
+        return self.equal(expected, constants.sections)
+
+    def isInternal(self, expected = None):
+        return self.equal(expected, constants.isInternal)
+
+    def startTime(self, expected = None):
+        return self.equal(expected, constants.startTime)
+
+    def endTime(self, expected = None):
+        return self.equal(expected, constants.endTime)
+
+    def back(self):
+        return self.parent
+
 class Address(MainValidator):
 
     def __init__(self, test, testing, parent = None):

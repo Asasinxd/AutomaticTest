@@ -1,4 +1,5 @@
 import requests
+from requests.api import head
 
 from ..TestsUtils.printAll import *
 from .setting import URL
@@ -194,4 +195,51 @@ class Helper():
 
         resp = requests.delete(url, headers = headers)
         printAll(name = "deleteUnit", response = resp)
+        return resp
+
+    def createReservation(self, data = defaultDataCreator.Reservation(), headers = dict()):
+        #Create reservation
+        url = f'{self.url}/v1/reservations'
+
+        resp = requests.post(url, json = data, headers = headers)
+        printAll(name = "createReservation", response = resp, data = data)
+        return resp
+
+    def getReservations(self, userID = None, unitID = None, limit = None, offset = None, headers = dict()):
+        #Get reservations
+
+        params = dict()
+
+        if userID != None: params[constants.userID] = userID
+        if unitID != None: params[constants.unitID] = unitID
+        if limit != None: params[constants.limit] = limit
+        if offset != None: params[constants.offset] = offset
+        url = f'{self.url}/v1/reservations'
+
+        resp = requests.get(url, params = params, headers = headers)
+        printAll(name = "getReservations", response = resp)
+        return resp
+
+    def getReservation(self, reservationID, headers = dict()):
+        #Get reservation
+        url = f'{self.url}/v1/reservations/{reservationID}'
+
+        resp = requests.get(url, headers = headers)
+        printAll(name = "getReservation", response = resp)
+        return resp
+
+    def updateReservation(self, reservationID, data = defaultDataCreator.ReservationUpdate(), headers = dict()):
+        #Update reservation
+        url = f'{self.url}/v1/reservations/{reservationID}'
+
+        resp = requests.patch(url, json = data, headers = headers)
+        printAll(name = "updateReservation", response = resp)
+        return resp
+
+    def deleteReservation(self, reservationID, headers = dict()):
+        #Delete reservation
+        url = f'{self.url}/v1/reservation/{reservationID}'
+
+        resp = requests.delete(url, headers = headers)
+        printAll(name = "deleteReservation", response = resp)
         return resp

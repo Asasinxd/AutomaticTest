@@ -34,12 +34,16 @@ class TestPatchCompany(TestCase):
                 .street()\
                 .city()\
                 .postalCode()\
+                .country()\
                 .back()
 
         Comaprator(self, testing, expected)\
             .name()\
             .address()\
-                .allFileds()\
+                .city()\
+                .street()\
+                .postalCode()\
+                .country()\
                 .back()
 
     def testPatchCompanyNonExistingCompany(self):

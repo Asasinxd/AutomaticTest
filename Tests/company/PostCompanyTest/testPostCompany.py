@@ -1,4 +1,3 @@
-from os import name
 from unittest import TestCase
 from http import HTTPStatus
 
@@ -42,7 +41,10 @@ class TestPostCompany(TestCase):
         Comaprator(self, testing, expected)\
             .name()\
             .address()\
-                .allFileds()\
+                .city()\
+                .street()\
+                .postalCode()\
+                .country()\
                 .back()
 
     def testPostCompanyAlreadyExist(self):
@@ -95,12 +97,12 @@ class TestPostCompany(TestCase):
 
     def testPostCompanyWithoutBody(self):
         """Post Company. No Body Given"""
-        createCompanyResponse = CompanyServiceHelper().createCompany(data = {})
+        createCompanyResponse = CompanyServiceHelper().createCompany(data = None)
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def testPostCompanyEmptyBody(self):
         """Post Company. Empty Body Given"""
-        createCompanyResponse = CompanyServiceHelper().createCompany(data = None)
+        createCompanyResponse = CompanyServiceHelper().createCompany(data = {})
         compareStatusCodes(self, createCompanyResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def tearDown(self):

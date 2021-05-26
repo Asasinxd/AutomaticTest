@@ -42,6 +42,15 @@ class TestPostSite(TestCase):
                 .postalCode()\
                 .country()\
                 .back()\
+            .weeklyOpeningTimes()\
+                .monday()\
+                .tuesday()\
+                .wednesday()\
+                .thursday()\
+                .friday()\
+                .saturday()\
+                .sunday()\
+                .back()\
             .pricing()\
                 .numberOfMinutes()\
                 .price()\
@@ -54,7 +63,16 @@ class TestPostSite(TestCase):
                 .city()\
                 .postalCode()\
                 .country()\
-                .back()    
+                .back()\
+            .weeklyOpeningTimes()\
+                .monday()\
+                .tuesday()\
+                .wednesday()\
+                .thursday()\
+                .friday()\
+                .saturday()\
+                .sunday()\
+                .back() 
 
 
     def testPatchSiteNonExistingSite(self):

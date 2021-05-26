@@ -36,12 +36,12 @@ class TestGetUserById(TestCase):
             .relations()
 
     def testGetUserNonExistingUser(self):
-        """Get User. Non Existing User"""
+        """Get User. Non-Existing User"""
         getUserResponse = UserServiceHelper().getUser(userID = randomUUID4())
         compareStatusCodes(self, getUserResponse.status_code, HTTPStatus.NOT_FOUND)
 
     def testGetUserDeleted(self):
-        """Get User. User Has Benn Deleted"""
+        """Get User. User Has Been Deleted"""
         UserServiceHelper().deleteUser(self.userID)
         getUserResponse = UserServiceHelper().getUser(userID = self.userID)
         compareStatusCodes(self, getUserResponse.status_code, HTTPStatus.NOT_FOUND)

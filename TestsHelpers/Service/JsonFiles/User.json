@@ -1,5 +1,5 @@
 {
-  "first_name": "string",
-  "last_name": "string",
-  "email": "user@example.com"
-}
+    "first_name": "string",
+    "last_name": "string",
+    "email": "user@example.com"
+  }

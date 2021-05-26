@@ -78,6 +78,9 @@ class SiteResponse(MainComparator):
 
     def pricing(self):
         return self.equalByComparator(constants.pricing, Pricing)
+        
+    def back(self):
+        return self.parent
 
 class UnitResponse(MainComparator):
     def __init__(self, test, testing, expected, parent = None):
@@ -96,7 +99,44 @@ class UnitResponse(MainComparator):
         return self.equal(constants.siteID)
 
     def name(self):
-        return self.equal(constants.name)        
+        return self.equal(constants.name) 
+
+    def back(self):
+        return self.parent
+
+class ReservationResponse(MainComparator):
+    def __init__(self, test, testing, expected, parent = None):
+        self.test = test
+        self.testing = testing
+        self.expected = expected
+        self.parent = parent
+
+    def allFields(self):
+        return self.equalAll()
+
+    def reservationID(self):
+        return self.equal(constants.reservationID)
+
+    def userID(self):
+        return self.equal(constants.userID)
+
+    def unitID(self):
+        return self.equal(constants.unitID)
+
+    def sections(self):
+        return self.equal(constants.sections)
+
+    def isInternal(self):
+        return self.equal(constants.isInternal)
+
+    def startTime(self):
+        return self.equal(constants.startTime)
+
+    def endTime(self):
+        return self.equal(constants.endTime)
+
+    def back(self):
+        return self.parent       
 
 class Address(MainComparator):
 

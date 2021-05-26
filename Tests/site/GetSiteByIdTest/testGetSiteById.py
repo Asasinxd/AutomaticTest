@@ -42,6 +42,15 @@ class TestSite(TestCase):
                 .postalCode()\
                 .country()\
                 .back()\
+            .weeklyOpeningTimes()\
+                .monday()\
+                .tuesday()\
+                .wednesday()\
+                .thursday()\
+                .friday()\
+                .saturday()\
+                .sunday()\
+                .back()\
             .pricing()\
                 .numberOfMinutes()\
                 .price()\
@@ -55,6 +64,15 @@ class TestSite(TestCase):
                 .city()\
                 .postalCode()\
                 .country()\
+                .back()\
+            .weeklyOpeningTimes()\
+                .monday()\
+                .tuesday()\
+                .wednesday()\
+                .thursday()\
+                .friday()\
+                .saturday()\
+                .sunday()\
                 .back()\
             .pricing()\
                 .numberOfMinutes()\
@@ -81,8 +99,7 @@ class TestSite(TestCase):
     def testGetNoSiteId(self):
         """Get Site. No Site Id Given"""
         getSiteResponse = Helper().getSite(siteID = None)
-        compareStatusCodes(self, getSiteResponse.status_code, HTTPStatus.OK)
-
+        compareStatusCodes(self, getSiteResponse.status_code, HTTPStatus.UNPROCESSABLE_ENTITY)
 
     def testGetSiteIdAsString(self):
         """Get Site. Site Id Is String Type"""

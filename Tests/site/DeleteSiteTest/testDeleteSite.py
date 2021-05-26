@@ -36,7 +36,7 @@ class TestPostSite(TestCase):
         compareStatusCodes(self, deleteCompanyResponse.status_code, HTTPStatus.NOT_FOUND)
 
     def testDeleteSiteDoesNotExist(self):
-        """Delete Site. Non Existing Site"""
+        """Delete Site. Non-Existing Site"""
         deleteCompanyResponse = Helper().deleteSite(siteID = randomUUID4())
         compareStatusCodes(self, deleteCompanyResponse.status_code, HTTPStatus.NOT_FOUND)
 

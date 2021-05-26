@@ -33,13 +33,17 @@ class TestGetCompanyById(TestCase):
                 .city()\
                 .street()\
                 .postalCode()\
+                .country()\
                 .back()
 
         Comaprator(self, testing, expected)\
             .companyID()\
             .name()\
             .address()\
-                .allFileds()\
+                .city()\
+                .street()\
+                .postalCode()\
+                .country()\
                 .back()
 
     def testGetCompanyNonExistingCompany(self):
