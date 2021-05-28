@@ -9,31 +9,31 @@
   },
   "weekly_opening_times": {
     "monday": {
-      "open_from": 1439,
+      "open_from": 900,
       "open_to": 1440
     },
     "tuesday": {
-      "open_from": 1439,
+      "open_from": 900,
       "open_to": 1440
     },
     "wednesday": {
-      "open_from": 1439,
+      "open_from": 900,
       "open_to": 1440
     },
     "thursday": {
-      "open_from": 1439,
+      "open_from": 900,
       "open_to": 1440
     },
     "friday": {
-      "open_from": 1439,
+      "open_from": 900,
       "open_to": 1440
     },
     "saturday": {
-      "open_from": 1439,
+      "open_from": 900,
       "open_to": 1440
     },
     "sunday": {
-      "open_from": 1439,
+      "open_from": 900,
       "open_to": 1440
     }
   },

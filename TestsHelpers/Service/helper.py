@@ -243,3 +243,19 @@ class Helper():
         resp = requests.delete(url, headers = headers)
         printAll(name = "deleteReservation", response = resp)
         return resp
+
+    def getVersion(self, headers = dict()):
+        #Get Version
+        url = f'{self.url}/v1/version'
+
+        resp = requests.get(url, headers = headers)
+        printAll(name = "getVersion", response = resp)
+        return resp
+    
+    def getHealth(self, headers = dict()):
+        #Get Health
+        url = f'{self.url}/v1/health'
+
+        resp = requests.get(url, headers = headers)
+        printAll(name = "getHealth", response = resp)
+        return resp

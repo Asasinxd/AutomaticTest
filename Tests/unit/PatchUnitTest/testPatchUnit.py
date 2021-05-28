@@ -9,7 +9,7 @@ from ....TestsHelpers.Service import constants
 
  
 from ....TestsHelpers.TestsUtils.compareStatusCodes import compareStatusCodes
-from ....TestsHelpers.TestsUtils.randomStuff import randomUUID4, randomWord, randomNumber
+from ....TestsHelpers.TestsUtils.randomStuff import randomUUID4, randomWord
 
 class TestPatchUnit(TestCase):
 
