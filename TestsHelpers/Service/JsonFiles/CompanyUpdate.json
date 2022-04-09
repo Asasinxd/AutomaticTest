@@ -1,0 +1,9 @@
+{
+    "name": "Ania",
+    "address": {
+      "street": "NewString",
+      "city": "NewString",
+      "postal_code": "NewString",
+      "country": "NewString"
+    }
+  }

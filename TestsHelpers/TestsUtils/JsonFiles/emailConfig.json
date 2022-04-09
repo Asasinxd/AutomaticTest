@@ -1,0 +1,18 @@
+{
+    "IMAP4": {
+        "Gmail": {
+            "host": "imap.gmail.com",
+            "port": 993,
+            "password": "HighEnough1234.",
+            "email": "awesome.functionaltests",
+            "domain": "@gmail.com"
+        },
+        "Interia": {
+            "host": "poczta.interia.pl",
+            "port": 993,
+            "password": "HighEnough1234.",
+            "email": "awesome.functionaltests",
+            "domain": "@interia.pl"
+        }
+    }
+}
